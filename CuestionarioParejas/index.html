@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cuestionario para MI MUJER 💖🔥</title>
+  <style>
+    :root {
+      --color-principal: #c9184a;
+      --color-secundario: #e255a1;
+      --color-fondo: linear-gradient(135deg, #ffe3ec 0%, #f8d7da 100%);
+      --color-blanco: #fff;
+      --sombra: 0 10px 30px rgba(226,85,161,0.15);
+      --sombra-hover: 0 15px 35px rgba(226,85,161,0.25);
+      --max-form: 450px;
+      --trans: .3s cubic-bezier(.4,0,.2,1);
+      --border-radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--color-fondo);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      position: relative;
+      overflow-x: hidden;
+      padding: 1rem;
+    }
+
+    .hearts-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      opacity: 0.4;
+      filter: blur(0.5px) drop-shadow(0 0 10px rgba(190, 30, 52, 0.3));
+      animation: floatHearts 20s linear infinite;
+      will-change: transform, opacity;
+      z-index: 0;
+    }
+
+    .heart svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    @keyframes floatHearts {
+      0% {
+        transform: translateY(110vh) scale(0.8) rotate(-20deg);
+        opacity: 0.5;
+      }
+      20% { opacity: 0.7; }
+      80% { opacity: 0.3; }
+      100% {
+        transform: translateY(-20vh) scale(1.2) rotate(20deg);
+        opacity: 0;
+      }
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-form);
+      z-index: 1;
+      position: relative;
+    }
+
+    h1 {
+      color: var(--color-principal);
+      margin: 1rem 0 1.5rem 0;
+      letter-spacing: 0.5px;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      text-align: center;
+      text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
+      font-weight: 700;
+    }
+
+    .help {
+      text-align: center;
+      margin: 0 auto 1.5rem auto;
+      color: #91305e;
+      background: rgba(255, 229, 241, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 1rem 1.5rem;
+      border-radius: var(--border-radius);
+      font-size: clamp(0.9rem, 2.5vw, 1rem);
+      line-height: 1.6;
+      box-shadow: var(--sombra);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+      z-index: 1;
+    }
+
+    .selector button {
+      padding: 0.8rem 1rem;
+      border: none;
+      background: var(--color-secundario);
+      color: #fff;
+      font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: var(--sombra);
+      transition: all var(--trans);
+      outline: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .selector button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .selector button:hover::before {
+      left: 100%;
+    }
+
+    .selector button.active,
+    .selector button:hover {
+      background: var(--color-principal);
+      transform: translateY(-2px);
+      box-shadow: var(--sombra-hover);
+    }
+
+    .form-section {
+      width: 100%;
+      background: var(--color-blanco);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      box-shadow: var(--sombra);
+      margin-bottom: 2rem;
+      z-index: 1;
+      display: none;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .form-section.active {
+      display: block;
+      animation: slideInUp 0.4s ease-out;
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section-title {
+      color: var(--color-secundario);
+      font-size: clamp(1.1rem, 3vw, 1.3rem);
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    label {
+      display: block;
+      margin-top: 1.2rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #a11444;
+      font-size: clamp(0.9rem, 2.2vw, 1rem);
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 2px solid #e0c7d6;
+      border-radius: 12px;
+      margin-top: 0.3rem;
+      font-size: clamp(0.9rem, 2.2vw, 1rem);
+      font-family: inherit;
+      background: #fef9fc;
+      transition: all var(--trans);
+      resize: vertical;
+      min-height: 48px;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border: 2px solid var(--color-principal);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(201, 24, 74, 0.1);
+      transform: translateY(-1px);
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .send-btn {
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      font-size: clamp(1rem, 2.5vw, 1.1rem);
+      background: linear-gradient(135deg, var(--color-principal) 0%, var(--color-secundario) 100%);
+      color: #fff;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: var(--sombra);
+      transition: all var(--trans);
+      letter-spacing: 0.5px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .send-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--sombra-hover);
+    }
+
+    .send-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Progress indicator */
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(226, 85, 161, 0.2);
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-principal), var(--color-secundario));
+      border-radius: 2px;
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+
+    /* Estilos para alerts personalizados */
+    .custom-alert {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, #fff 0%, #fef9fc 100%);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(201, 24, 74, 0.3);
+      padding: 2rem;
+      text-align: center;
+      max-width: 90vw;
+      width: 400px;
+      z-index: 10000;
+      border: 2px solid var(--color-secundario);
+      animation: alertBounce 0.5s ease-out;
+    }
+
+    @keyframes alertBounce {
+      0% { 
+        transform: translate(-50%, -50%) scale(0.5); 
+        opacity: 0; 
+      }
+      60% { 
+        transform: translate(-50%, -50%) scale(1.1); 
+      }
+      100% { 
+        transform: translate(-50%, -50%) scale(1); 
+        opacity: 1; 
+      }
+    }
+
+    .alert-emoji {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      animation: alertShake 0.6s ease-in-out infinite alternate;
+      display: block;
+    }
+
+    @keyframes alertShake {
+      0% { transform: rotate(-5deg); }
+      100% { transform: rotate(5deg); }
+    }
+
+    .alert-title {
+      font-size: clamp(1.2rem, 3vw, 1.5rem);
+      font-weight: 700;
+      color: var(--color-principal);
+      margin-bottom: 0.5rem;
+    }
+
+    .alert-message {
+      font-size: clamp(1rem, 2.5vw, 1.1rem);
+      color: #666;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .alert-button {
+      padding: 0.8rem 1.5rem;
+      background: var(--color-secundario);
+      color: #fff;
+      font-size: clamp(0.9rem, 2.2vw, 1rem);
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--sombra);
+      transition: all var(--trans);
+    }
+
+    .alert-button:hover {
+      background: var(--color-principal);
+      transform: translateY(-2px);
+    }
+
+    /* Responsive improvements */
+    @media (max-width: 768px) {
+      body {
+        padding: 0.5rem;
+      }
+      
+      .container {
+        max-width: 100%;
+      }
+      
+      .form-section {
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      
+      .selector {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.6rem;
+      }
+      
+      .help {
+        padding: 0.8rem 1rem;
+        margin-bottom: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .selector {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-section {
+        padding: 1rem;
+        border-radius: 12px;
+      }
+      
+      input, textarea, select {
+        padding: 0.7rem;
+      }
+    }
+
+    /* Accessibility improvements */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Focus styles for better accessibility */
+    button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+      outline: 2px solid var(--color-principal);
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Corazones animados -->
+  <div class="hearts-bg" aria-hidden="true"></div>
+  
+  <div class="container">
+    <h1>Cuestionario para MI MUJER 💖</h1>
+    
+    <div class="help">
+      Selecciona una sección, responde con sinceridad y amor, y envíame tus respuestas. 💕
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    
+    <div class="selector">
+      <button type="button" class="active" data-section="hot">🔥 Hot</button>
+      <button type="button" data-section="fantasia">✨ Fantasía</button>
+      <button type="button" data-section="historia">💌 Historia</button>
+      <button type="button" data-section="detalles">🌟 Detalles</button>
+    </div>
+
+    <form id="main-form" autocomplete="off">
+      <!-- Sección HOT -->
+      <div class="form-section active" id="hot-section">
+        <div class="section-title">🔥 Preguntas Hot</div>
+        <label>¿Qué prenda te hace sentir más sexy?
+          <input type="text" name="prenda_sexy" required />
+        </label>
+        <label>¿En qué lugar te gustaría hacerlo alguna vez?
+          <input type="text" name="lugar_hot" required />
+        </label>
+        <label>¿Qué palabra o frase te excita escucharme decirte?
+          <input type="text" name="frase_hot" required />
+        </label>
+        <label>¿Te animarías a una videollamada hot?
+          <select name="videollamada_hot" required>
+            <option value="">Elige una opción</option>
+            <option value="Sí">Sí</option>
+            <option value="No">No</option>
+            <option value="Tal vez...">Tal vez...</option>
+          </select>
+        </label>
+        <label>Califica tu nivel de travesura hoy (1-10)
+          <input type="number" name="travesura_hot" min="1" max="10" required />
+        </label>
+      </div>
+
+      <!-- Sección FANTASÍA -->
+      <div class="form-section" id="fantasia-section">
+        <div class="section-title">✨ Preguntas de Fantasía</div>
+        <label>Describe una fantasía que quieras cumplir conmigo
+          <textarea name="fantasia_1" required rows="3"></textarea>
+        </label>
+        <label>¿Qué fantasía tienes pero nunca has contado?
+          <textarea name="fantasia_2" required rows="3"></textarea>
+        </label>
+        <label>¿Qué parte de tu cuerpo te gustaría que explore más?
+          <input type="text" name="zona_fantasia" required />
+        </label>
+        <label>¿Con qué canción o ambiente te gustaría que suceda?
+          <input type="text" name="musica_fantasia" required />
+        </label>
+      </div>
+
+      <!-- Sección NUESTRA HISTORIA -->
+      <div class="form-section" id="historia-section">
+        <div class="section-title">💌 Nuestra Historia</div>
+        <label>¿Cuál ha sido tu recuerdo más travieso conmigo?
+          <textarea name="recuerdo_historia" required rows="3"></textarea>
+        </label>
+        <label>¿Qué es lo que más te enamora de mí?
+          <textarea name="enamora_historia" required rows="3"></textarea>
+        </label>
+        <label>Si nuestra relación fuera una película, ¿cómo se llamaría?
+          <input type="text" name="pelicula_historia" required />
+        </label>
+        <label>¿Cuál fue tu primera impresión de mí?
+          <input type="text" name="primera_historia" required />
+        </label>
+        <label>Un momento juntos que nunca olvidarás:
+          <textarea name="momento_historia" required rows="3"></textarea>
+        </label>
+      </div>
+
+      <!-- Sección DETALLES DE TU MUNDO -->
+      <div class="form-section" id="detalles-section">
+        <div class="section-title">🌟 Detalles de tu mundo</div>
+        <label>¿Cuál es tu flor favorita?
+          <input type="text" name="flor_detalles" required />
+        </label>
+        <label>¿Cuál es tu recuerdo más feliz de la infancia?
+          <textarea name="infancia_detalles" required rows="3"></textarea>
+        </label>
+        <label>¿Qué canción te pone de buen humor al instante?
+          <input type="text" name="cancion_detalles" required />
+        </label>
+        <label>Si pudieras viajar a cualquier parte del mundo, ¿a dónde irías?
+          <input type="text" name="viaje_detalles" required />
+        </label>
+        <label>¿Cuál es tu sueño o meta más grande?
+          <textarea name="sueño_detalles" required rows="3"></textarea>
+        </label>
+      </div>
+
+      <button type="submit" class="send-btn" id="send-btn">
+        Enviar TODO a WhatsApp 💖
+      </button>
+    </form>
+  </div>
+
+  <script>
+    // Corazones animados mejorados
+    const heartsBg = document.querySelector('.hearts-bg');
+    
+    function randomBetween(a, b) { 
+      return Math.random() * (b - a) + a; 
+    }
+    
+    const heartColors = ["#e53935", "#b71c1c", "#ff1744", "#ff5252", "#ff6f60"];
+    
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      const size = randomBetween(40, 80);
+      heart.style.width = size + 'px';
+      heart.style.height = size + 'px';
+      heart.style.left = randomBetween(-10, 110) + 'vw';
+      heart.style.animationDuration = randomBetween(15, 25) + 's';
+      heart.style.animationDelay = randomBetween(-20, 0) + 's';
+      
+      const color = heartColors[Math.floor(Math.random() * heartColors.length)];
+      heart.innerHTML = `<svg viewBox="0 0 32 29.6">
+        <path fill="${color}" d="M23.6,0c-2.7,0-5,1.6-6.6,4.1C15.4,1.6,13.1,0,10.4,0C4.7,0,0,4.7,0,10.4
+        c0,8.5,16,19.2,16,19.2s16-10.7,16-19.2C32,4.7,27.3,0,23.6,0z"/>
+      </svg>`;
+      
+      return heart;
+    }
+    
+    function renderHearts() {
+      heartsBg.innerHTML = "";
+      const heartCount = window.innerWidth < 600 ? 8 : 12;
+      
+      for(let i = 0; i < heartCount; i++) {
+        heartsBg.appendChild(createHeart());
+      }
+    }
+    
+    renderHearts();
+    window.addEventListener('resize', renderHearts);
+
+    // Navegación entre secciones
+    const sectionBtns = document.querySelectorAll('.selector button');
+    const formSections = document.querySelectorAll('.form-section');
+    
+    sectionBtns.forEach((btn, idx) => {
+      btn.addEventListener('click', () => {
+        sectionBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        formSections.forEach(f => f.classList.remove('active'));
+        formSections[idx].classList.add('active');
+        
+        // Scroll suave a la sección
+        formSections[idx].scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start' 
+        });
+      });
+    });
+
+    // Alert personalizado
+    function showCustomAlert() {
+      // Crear el alert personalizado
+      const alertDiv = document.createElement('div');
+      alertDiv.className = 'custom-alert';
+      alertDiv.innerHTML = `
+        <span class="alert-emoji">😭</span>
+        <div class="alert-title">¡No me amas! 😢</div>
+        <div class="alert-message">
+          Por eso no quieres responder todo...<br>
+          Responde todas las preguntas para poder enviármelo.
+        </div>
+        <button class="alert-button" onclick="this.parentElement.remove()">
+          Lo siento, seguiré respondiendo 💕
+        </button>
+      `;
+      
+      document.body.appendChild(alertDiv);
+      
+      // Auto-remover después de 5 segundos si no se cierra manualmente
+      setTimeout(() => {
+        if (alertDiv.parentElement) {
+          alertDiv.remove();
+        }
+      }, 5000);
+    }
+
+    // Control del formulario y progreso
+    const mainForm = document.getElementById('main-form');
+    const sendBtn = document.getElementById('send-btn');
+    const progressFill = document.getElementById('progress-fill');
+    
+    function updateProgress() {
+      const requiredFields = mainForm.querySelectorAll('input[required], textarea[required], select[required]');
+      let filledFields = 0;
+      
+      requiredFields.forEach(field => {
+        if (field.value.trim() !== '') {
+          filledFields++;
+        }
+      });
+      
+      const percentage = (filledFields / requiredFields.length) * 100;
+      progressFill.style.width = percentage + '%';
+      
+      return percentage === 100;
+    }
+    
+    function checkAllFilled() {
+      updateProgress();
+    }
+    
+    // Event listeners para el formulario
+    mainForm.addEventListener('input', checkAllFilled);
+    mainForm.addEventListener('change', checkAllFilled);
+    
+    // Envío del formulario
+    mainForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Verificar si todos los campos están completos
+      const requiredFields = mainForm.querySelectorAll('input[required], textarea[required], select[required]');
+      let isComplete = true;
+      
+      requiredFields.forEach(field => {
+        if (field.value.trim() === '') {
+          isComplete = false;
+        }
+      });
+      
+      if (!isComplete) {
+        showCustomAlert();
+        return;
+      }
+      
+      const formData = new FormData(mainForm);
+      const message = `
+🔥 *Preguntas Hot de MI MUJER* 🔥
+👙 Prenda sexy: ${formData.get('prenda_sexy')}
+🌍 Lugar hot: ${formData.get('lugar_hot')}
+💬 Frase hot: ${formData.get('frase_hot')}
+📱 Videollamada hot: ${formData.get('videollamada_hot')}
+😈 Nivel de travesura: ${formData.get('travesura_hot')}
+
+✨ *Preguntas de Fantasía de MI MUJER* ✨
+🔥 Fantasía a cumplir: ${formData.get('fantasia_1')}
+🤫 Fantasía secreta: ${formData.get('fantasia_2')}
+😘 Zona para explorar: ${formData.get('zona_fantasia')}
+🎶 Música/ambiente ideal: ${formData.get('musica_fantasia')}
+
+💌 *Nuestra Historia* 💌
+😈 Recuerdo travieso: ${formData.get('recuerdo_historia')}
+💕 Lo que más te enamora: ${formData.get('enamora_historia')}
+🎬 Nombre de nuestra película: ${formData.get('pelicula_historia')}
+👀 Primera impresión de mí: ${formData.get('primera_historia')}
+💑 Momento inolvidable: ${formData.get('momento_historia')}
+
+🌟 *Detalles de tu mundo - MI MUJER* 🌟
+🌷 Flor favorita: ${formData.get('flor_detalles')}
+🧸 Recuerdo feliz de infancia: ${formData.get('infancia_detalles')}
+🎶 Canción que alegra: ${formData.get('cancion_detalles')}
+🌍 Viaje soñado: ${formData.get('viaje_detalles')}
+✨ Sueño/meta más grande: ${formData.get('sueño_detalles')}
+      `.trim();
+      
+      const whatsappNumber = '59178130227';
+      const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    });
+
+    // Inicializar
+    checkAllFilled();
+  </script>
+</body>
+</html>
